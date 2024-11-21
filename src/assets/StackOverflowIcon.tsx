@@ -1,5 +1,3 @@
-import React from "react";
-
 const StackOverflowLogo = () => (
   <svg
     aria-hidden="true"

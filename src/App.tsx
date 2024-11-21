@@ -1,6 +1,7 @@
 import LeftSideBar from "./components/LeftSideBar";
 import Navbar from "./components/Navbar";
 import { Home, Search, MessageSquare, Award, Briefcase, Users, Plus, Globe } from 'lucide-react';
+import RightSidebar from "./components/RightSideBar";
 
 export default function App() {
   const LeftSideBarItems = [
@@ -19,10 +20,13 @@ export default function App() {
   ];
 
   return (
-    <div>
+    <div >
       <Navbar />
-      <LeftSideBar items={LeftSideBarItems} />
-      {/* <div className='text-blue-950'>hi there</div> */}
+      <div className="flex justify-between">
+        <LeftSideBar items={LeftSideBarItems} />
+        {/* <div className='text-blue-950'>hi there</div> */}
+        <RightSidebar />
+      </div>
     </div>
 
   );

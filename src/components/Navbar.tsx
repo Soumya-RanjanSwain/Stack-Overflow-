@@ -2,6 +2,7 @@ import { Search, MessageSquare, Trophy, List, User } from 'lucide-react';
 // import logo from '../assets/StackOverflowFavicon.png';
 // import stack from '../assets/logo.svg';
 import StackOverflowLogo from "../assets/StackOverflowIcon";
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   return (
@@ -9,7 +10,8 @@ const Navbar = () => {
       <div className="max-w-[1400px] mx-auto px-4 h-14 flex items-center justify-between">
         <div className="flex items-center">
           <div className="flex items-center">
-            <StackOverflowLogo/>
+            <Link to={"/"}><StackOverflowLogo /></Link>
+
             {/* <img src={logo} alt="Stack Overflow" width="70px" /> */}
             {/* <div>stack<b>overflow</b></div> */}
           </div>
