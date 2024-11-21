@@ -25,15 +25,15 @@ interface ApiResponseItem {
 }
 
 const QuestionList = () => {
-    const [activeButton, setActiveButton] = useState('interesting');
+    const [activeButton, setActiveButton] = useState('Interesting');
     const [questionsCache, setQuestionsCache] = useRecoilState(questionsState);
     const [loading, setLoading] = useRecoilState(loadingState);
     const [error, setError] = useRecoilState(errorState);
 
-    const buttons = ['interesting', 'Bountied', 'Hot', 'Week', 'Month'];
+    const buttons = ['Interesting', 'Bountied', 'Hot', 'Week', 'Month'];
 
     const apiEndpoints: { [key: string]: string } = {
-        interesting: 'https://api.stackexchange.com/2.3/questions?order=desc&sort=activity&site=stackoverflow&filter=!)rG855.3x2.wEj4klcBt&key=rl_GuTbjyeFa1DQXP9Nk47iAsrSJ',
+        Interesting: 'https://api.stackexchange.com/2.3/questions?order=desc&sort=activity&site=stackoverflow&filter=!)rG855.3x2.wEj4klcBt&key=rl_GuTbjyeFa1DQXP9Nk47iAsrSJ',
         Bountied: 'https://api.stackexchange.com/2.3/questions/featured?order=desc&sort=activity&site=stackoverflow&pagesize=20&key=rl_GuTbjyeFa1DQXP9Nk47iAsrSJ',
         Hot: 'https://api.stackexchange.com/2.3/questions?order=desc&sort=hot&site=stackoverflow&key=rl_GuTbjyeFa1DQXP9Nk47iAsrSJ',
         Week: 'https://api.stackexchange.com/2.3/questions?order=desc&sort=week&site=stackoverflow&key=rl_GuTbjyeFa1DQXP9Nk47iAsrSJ',
@@ -88,14 +88,14 @@ const QuestionList = () => {
     return (
         <div className="space-y-4 mt-4 mb-4">
             <div className="flex justify-between items-center">
-                <h1 className="text-2xl font-medium">Top Questions</h1>
+                <h1 className="lg:text-2xl lg:font-medium font-normal ms-2 lg:ms-0">Top Questions</h1>
             </div>
-            <div className="flex justify-between items-center mb-6">
-                <div className="flex gap-2">
+            <div className="flex justify-between items-center mb-6 px-2">
+                <div className="flex gap-1 lg:gap-2">
                     {buttons.map((button, index) => (
                         <button
                             key={index}
-                            className={`px-5 py-1 rounded-3xl transition-all duration-300 ${
+                            className={`lg:px-5 lg:text-base text-sm px-1 py-1 rounded-3xl transition-all duration-300 ${
                                 activeButton === button
                                     ? 'bg-orange-500 text-white'
                                     : 'text-gray-500 hover:bg-orange-100 hover:text-orange-500'
@@ -106,8 +106,8 @@ const QuestionList = () => {
                         </button>
                     ))}
                 </div>
-                <button className="px-10 py-1 bg-[#0A95FF] text-white rounded-3xl hover:bg-[#0074CC]">
-                    Ask Question
+                <button className="lg:px-10 px-3 lg:text-base text-sm py-1 bg-[#0A95FF] text-white rounded-3xl hover:bg-[#0074CC]">
+                    Ask <span className='hidden lg:inline'> Question</span>
                 </button>
             </div>
 

@@ -1,4 +1,5 @@
 import { Pencil } from 'lucide-react';
+import Logo from "../assets/stack-overflow.png";
 
 const RightSidebar = () => {
     const blogPosts = [
@@ -28,7 +29,7 @@ const RightSidebar = () => {
     ];
 
     return (
-        <aside className="w-[350px] p-3">
+        <aside className="w-[350px] p-3 hidden lg:block">
             <div className='bg-[#fdfcfb] p-5'>
                 <h3 className="text-lg font-medium pb-4 ">The Overflow Blog</h3>
                 <ul className="space-y-3">
@@ -46,9 +47,9 @@ const RightSidebar = () => {
                 <h3 className="text-lg font-medium pb-4">Featured & meta</h3>
                 <ul className="space-y-3">
                     <div className="flex gap-2">
-                        <Pencil className="h-4 w-4 text-gray-600 flex-shrink-0 mt-1" />
+                        <img src={Logo} className="h-4" />
                         <a href="#" className="text-[12px] text-gray-600 hover:text-[#0A95FF]">
-                        Beta release of Collective™ on Stack Overflow
+                            Beta release of Collective™ on Stack Overflow
                         </a>
                     </div>
                 </ul>

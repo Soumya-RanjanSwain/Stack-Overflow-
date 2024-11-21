@@ -1,7 +1,7 @@
-const StackOverflowLogo = () => (
+const StackOverflowLogo = ({ className = "" }) => (
   <svg
     aria-hidden="true"
-    className="native svg-icon iconMarketingAdvertising mb16"
+    className={`native svg-icon iconMarketingAdvertising mb16 ${className}`}
     width="157"
     height="37"
     viewBox="0 0 157 37"

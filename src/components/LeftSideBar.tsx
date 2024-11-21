@@ -17,7 +17,7 @@ const LeftSideBar = ({ items }: LeftSideBarProps) => {
   const location = useLocation();
 
   return (
-    <aside className="sticky top-14 z-40 h-[calc(100vh-3.5rem)] w-[250px] border-r border-gray-200 bg-white">
+    <aside className="sticky top-14 z-40 h-[calc(100vh-3.5rem)] w-[250px] border-r border-gray-200 bg-white hidden lg:block">
       {items.map((item, index) => (
         <div key={index} className="px-2">
           {item.header && (
