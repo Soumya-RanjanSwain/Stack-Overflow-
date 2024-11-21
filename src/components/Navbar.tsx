@@ -30,18 +30,18 @@ const Navbar = () => {
           </div>
         </div>
 
-        <button className="text-sm text-gray-600 hover:bg-gray-100 px-3 py-1.5 rounded-md">
+        <button className="text-sm text-[#636b74] hover:bg-[#e3e6e8] px-3 py-1.5 rounded-3xl">
           Products
         </button>
 
         <div className="flex items-center gap-4 lg:pl-10">
-          <button className="p-2 hover:bg-gray-100 rounded-md">
+          <button className="p-2 hover:bg-[#e3e6e8] rounded-md">
             <MessageSquare className="h-5 w-5 text-gray-600" />
           </button>
-          <button className="p-2 hover:bg-gray-100 rounded-md">
+          <button className="p-2 hover:bg-[#e3e6e8] rounded-md">
             <Trophy className="h-5 w-5 text-gray-600" />
           </button>
-          <button className="p-2 hover:bg-gray-100 rounded-md">
+          <button className="p-2 hover:bg-[#e3e6e8] rounded-md">
             <List className="h-5 w-5 text-gray-600" />
           </button>
           <button className="p-1 hover:bg-gray-200 rounded-full">
