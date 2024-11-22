@@ -16,3 +16,7 @@ export const errorState = atom<string | null>({
     default: null,
 });
 
+export const searchQueryState = atom<string>({
+  key: 'searchQueryState',
+  default: '',
+});

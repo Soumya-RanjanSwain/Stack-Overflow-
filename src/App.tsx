@@ -2,10 +2,12 @@ import LeftSideBar from "./components/LeftSideBar";
 import Navbar from "./components/Navbar";
 import { Home, Search, MessageSquare, Award, Briefcase, Users, Plus, Globe } from 'lucide-react';
 import RightSidebar from "./components/RightSideBar";
-import QuestionList from "./components/QuestionList";
-
+import QuestionList from './components/QuestionList';
+import SearchList from './components/SearchList';
+import { useState } from "react";
 
 export default function App() {
+  const [searchQuery, setSearchQuery] = useState<string>('');
   const LeftSideBarItems = [
     { icon: Home, label: 'Home', active: true, path: '/' },
     { icon: Globe, label: 'PUBLIC', header: true },
@@ -23,11 +25,11 @@ export default function App() {
 
   return (
     <div >
-      <Navbar />
+      <Navbar setSearchQuery={setSearchQuery} />
       <div className="flex justify-between">
         <LeftSideBar items={LeftSideBarItems} />
         {/* <div className='text-blue-950'>hi there</div> */}
-        <QuestionList />
+        {searchQuery ? <SearchList searchQuery={searchQuery} /> : <QuestionList />}
         <RightSidebar />
       </div>
     </div>
