@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { MessageSquare, Eye, Triangle, Star } from "lucide-react";
+import { decoder } from "../utils/htmlEntityDecoder";
 
 export interface Question {
     title: string;
@@ -14,7 +15,7 @@ export interface Question {
     bounty_amount?: number;
 }
 
-const QuestionItem = ({title,tags,votes,answers,views,askedBy,timeAgo,ownerLink,questionLink,bounty_amount,}: Question) => {
+const QuestionItem = ({ title, tags, votes, answers, views, askedBy, timeAgo, ownerLink, questionLink, bounty_amount, }: Question) => {
     const [isVoteClicked, setIsVoteClicked] = useState(true);
     const [isAnswerClicked, setIsAnswerClicked] = useState(false);
     const [isViewClicked, setIsViewClicked] = useState(false);
@@ -24,7 +25,7 @@ const QuestionItem = ({title,tags,votes,answers,views,askedBy,timeAgo,ownerLink,
             <div className="flex-1">
                 <h2 className=" text-base lg:text-lg mb-2 text-[#5a5a5a] hover:text-black font-semibold max-w-[750px] text-justify">
                     <a href={questionLink} target="_blank" rel="noopener noreferrer">
-                        {title}
+                        {decoder(title)}
                     </a>
                 </h2>
 
@@ -45,9 +46,8 @@ const QuestionItem = ({title,tags,votes,answers,views,askedBy,timeAgo,ownerLink,
                             onClick={() => setIsVoteClicked(!isVoteClicked)}
                         >
                             <Triangle
-                                className={`h-4 w-4 ${
-                                    isVoteClicked ? "stroke-orange-400 " : ""
-                                } hover:cursor-pointer`}
+                                className={`h-4 w-4 ${isVoteClicked ? "stroke-orange-400 " : ""
+                                    } hover:cursor-pointer`}
                             />
                             <span>{votes}</span>
                         </div>
@@ -56,9 +56,8 @@ const QuestionItem = ({title,tags,votes,answers,views,askedBy,timeAgo,ownerLink,
                             onClick={() => setIsAnswerClicked(!isAnswerClicked)}
                         >
                             <MessageSquare
-                                className={`h-4 w-4 ${
-                                    isAnswerClicked ? "stroke-orange-400" : ""
-                                } hover:cursor-pointer`}
+                                className={`h-4 w-4 ${isAnswerClicked ? "stroke-orange-400" : ""
+                                    } hover:cursor-pointer`}
                             />
                             <span>{answers}</span>
                         </div>
@@ -67,9 +66,8 @@ const QuestionItem = ({title,tags,votes,answers,views,askedBy,timeAgo,ownerLink,
                             onClick={() => setIsViewClicked(!isViewClicked)}
                         >
                             <Eye
-                                className={`h-4 w-4 ${
-                                    isViewClicked ? "stroke-orange-400 " : ""
-                                } hover:cursor-pointer`}
+                                className={`h-4 w-4 ${isViewClicked ? "stroke-orange-400 " : ""
+                                    } hover:cursor-pointer`}
                             />
                             <span>{views}</span>
                         </div>
@@ -90,7 +88,7 @@ const QuestionItem = ({title,tags,votes,answers,views,askedBy,timeAgo,ownerLink,
                             className="text-[#0074CC] hover:text-[#0A95FF]"
                             rel="noopener noreferrer"
                         >
-                            {askedBy}
+                            {decoder(askedBy)}
                         </a>
                     </div>
                 </div>
@@ -102,7 +100,7 @@ const QuestionItem = ({title,tags,votes,answers,views,askedBy,timeAgo,ownerLink,
                         className="text-[#0074CC] hover:text-[#0A95FF]"
                         rel="noopener noreferrer"
                     >
-                        {askedBy}
+                        {decoder(askedBy)}
                     </a>
                 </div>
             </div>

@@ -29,6 +29,8 @@ const QuestionList = () => {
     const [questionsCache, setQuestionsCache] = useRecoilState(questionsState);
     const [loading, setLoading] = useRecoilState(loadingState);
     const [error, setError] = useRecoilState(errorState);
+    const [globalBackoff, setGlobalBackoff] = useState<number | null>(null); 
+    const [countdown, setCountdown] = useState<number | null>(null);
 
     const buttons = ['Interesting', 'Bountied', 'Hot', 'Week', 'Month'];
 
@@ -41,6 +43,10 @@ const QuestionList = () => {
     };
 
     const fetchQuestions = () => {
+        if (globalBackoff !== null) {
+            return;
+        }
+
         if (questionsCache[activeButton]) {
             return;
         }
@@ -56,6 +62,12 @@ const QuestionList = () => {
                 return response.json();
             })
             .then((data) => {
+                if (data.backoff) {
+                    setGlobalBackoff(data.backoff);
+                    setCountdown(data.backoff);
+                    setTimeout(() => setGlobalBackoff(null), data.backoff * 1000);
+                }
+
                 const fetchedQuestions: Question[] = data.items.map((item: ApiResponseItem) => ({
                     title: item.title,
                     questionLink: item.link,
@@ -66,9 +78,8 @@ const QuestionList = () => {
                     askedBy: item.owner.display_name,
                     ownerLink: item.owner.link,
                     timeAgo: getTimeDifference(item.creation_date),
-                    bounty_amount: item.bounty_amount, 
-                }))
-                ;
+                    bounty_amount: item.bounty_amount,
+                }));
 
                 setQuestionsCache((prev) => ({
                     ...prev,
@@ -80,26 +91,51 @@ const QuestionList = () => {
     };
 
     useEffect(() => {
-        fetchQuestions();
+        if (!questionsCache[activeButton]) {
+            fetchQuestions();
+        }
     }, [activeButton]);
 
-    const questions = questionsCache[activeButton] || [];
+    useEffect(() => {
+        if (globalBackoff === null && !questionsCache[activeButton]) {
+            fetchQuestions();
+        }
+    }, [globalBackoff]);
+
+    useEffect(() => {
+        if (countdown === null) {
+            return;
+        }
+
+        const interval = setInterval(() => {
+            setCountdown((prev) => {
+                if (prev === null || prev <= 1) {
+                    clearInterval(interval);
+                    return null;
+                }
+                return prev - 1;
+            });
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, [countdown]);
+
+    // const questions = questionsCache[activeButton] || [];
 
     return (
         <div className="space-y-4 mt-4 mb-4">
             <div className="flex justify-between items-center">
                 <h1 className="lg:text-2xl lg:font-medium font-normal ms-2 lg:ms-0">Top Questions</h1>
             </div>
-            <div className="flex justify-between items-center mb-6 px-2">
+            <div className="flex justify-between items-center mb-6 px-2 lg:min-w-[790px]">
                 <div className="flex gap-1 lg:gap-2">
                     {buttons.map((button, index) => (
                         <button
                             key={index}
-                            className={`lg:px-5 lg:text-base text-sm px-1 py-1 rounded-3xl transition-all duration-300 ${
-                                activeButton === button
+                            className={`lg:px-5 lg:text-base text-sm px-1 py-1 rounded-3xl transition-all duration-300 ${activeButton === button
                                     ? 'bg-orange-500 text-white'
                                     : 'text-gray-500 hover:bg-orange-100 hover:text-orange-500'
-                            }`}
+                                }`}
                             onClick={() => setActiveButton(button)}
                         >
                             {button}
@@ -112,14 +148,24 @@ const QuestionList = () => {
             </div>
 
             <div className="space-y-4">
-                {loading &&
+                {globalBackoff !== null && !questionsCache[activeButton] && (
+                    <div className="flex flex-col items-center space-y-2">
+                        <div className="text-6xl">⏳</div>
+                        <p className="text-xl">
+                            Please wait {countdown} second{countdown !== 1 && 's'}...
+                        </p>
+                    </div>
+                )}
+                {loading && globalBackoff === null &&
                     [...Array(5)].map((_, index) => <SkeletonLoader key={index} />)}
-                {error && <p className="text-red-500">Error: {error}</p>}
-                {!loading && !error && questions.length === 0 && (
+                {!loading && globalBackoff === null && error && (!questionsCache[activeButton] || questionsCache[activeButton].length === 0) && (
+                    <p className="text-red-500">Error: {error}</p>
+                )}
+                {!loading && globalBackoff === null && (!questionsCache[activeButton] || questionsCache[activeButton].length === 0) && !error && (
                     <p>No questions available</p>
                 )}
-                {!loading &&
-                    questions.map((question, index) => (
+                {!loading && questionsCache[activeButton] && questionsCache[activeButton].length > 0 &&
+                    questionsCache[activeButton].map((question, index) => (
                         <QuestionItem
                             key={index}
                             title={question.title}
